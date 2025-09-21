@@ -1,4 +1,4 @@
-# TEA Test ADC MUX
+# TEA_Lab Test ADC MUX
 
 A Verilog-based multi-channel ADC (Analog-to-Digital Converter) system with multiplexer functionality for TEA Lab testing purposes.
 
