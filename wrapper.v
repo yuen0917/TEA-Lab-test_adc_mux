@@ -1,20 +1,30 @@
 module wrapper(
-  input sck,ws,rst,start,S_AXIS_tready,
+  // input
+  input sck,
+  input ws,
+  input rst,
+  input start,
+  input S_AXIS_tready,
   input [7:0]sd,
-  output [127:0]S_AXIS_tdata,
-  output S_AXIS_tvalid,S_AXIS_tlast,
-  output [7:0]flag_mux_to_adc_fuck,
-  output [7:0]flag_adc_to_mux_fuck
-  );
 
-  wire [31:0]data[0:7];
-  wire [7:0]flag_adc_to_mux;
-  wire [7:0]flag_mux_to_adc;
+  // output
+  output   [7:0] flag_mux_to_adc_debug,
+  output   [7:0] flag_adc_to_mux_debug,
+  output [127:0] S_AXIS_tdata,
+  output         S_AXIS_tvalid,
+  output         S_AXIS_tlast
+);
 
+  // wire
+  wire [31:0] data [0:7];
+  wire  [7:0] flag_adc_to_mux;
+  wire  [7:0] flag_mux_to_adc;
 
-  assign flag_mux_to_adc_fuck=flag_mux_to_adc;
-  assign flag_adc_to_mux_fuck=flag_adc_to_mux;
+  // assign
+  assign flag_mux_to_adc_debug = flag_mux_to_adc;
+  assign flag_adc_to_mux_debug = flag_adc_to_mux;
 
+  // generate
   genvar i;
 
   generate
@@ -32,6 +42,7 @@ module wrapper(
     end
   endgenerate
 
+  // mux
   mux m0(
     .clk(sck),
     .rst(rst),
@@ -52,7 +63,6 @@ module wrapper(
     .flag6_in(flag_adc_to_mux[5]),
     .flag7_in(flag_adc_to_mux[6]),
     .flag8_in(flag_adc_to_mux[7]),
-    //.flag8_in(1'b0),
     .S_AXIS_tdata(S_AXIS_tdata),
     .S_AXIS_tvalid(S_AXIS_tvalid),
     .S_AXIS_tlast(S_AXIS_tlast),

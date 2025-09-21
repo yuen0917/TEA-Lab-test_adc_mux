@@ -68,8 +68,8 @@ The system consists of three main modules:
   - `S_AXIS_tdata[127:0]`: 128-bit AXI-Stream data
   - `S_AXIS_tvalid`: AXI-Stream valid signal
   - `S_AXIS_tlast`: AXI-Stream last signal
-  - `flag_mux_to_adc_fuck[7:0]`: Debug output for multiplexer to ADC flags
-  - `flag_adc_to_mux_fuck[7:0]`: Debug output for ADC to multiplexer flags
+  - `flag_mux_to_adc_debug[7:0]`: Debug output for multiplexer to ADC flags
+  - `flag_adc_to_mux_debug[7:0]`: Debug output for ADC to multiplexer flags
 
 ## Testbench
 

@@ -138,8 +138,8 @@ module wrapper_tb;
     .S_AXIS_tdata(S_AXIS_tdata),
     .S_AXIS_tvalid(S_AXIS_tvalid),
     .S_AXIS_tlast(S_AXIS_tlast),
-    .flag_mux_to_adc_fuck(flag_mux_to_adc),
-    .flag_adc_to_mux_fuck(flag_adc_to_mux)
+    .flag_mux_to_adc_debug(flag_mux_to_adc),
+    .flag_adc_to_mux_debug(flag_adc_to_mux)
   );
 
   // =======================
