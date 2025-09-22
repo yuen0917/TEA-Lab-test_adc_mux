@@ -104,6 +104,7 @@ module adc(
     reg  [4:0] bit_count;
     reg  [1:0] delay;
     reg        state;
+    reg        ws_d; // ws delayed for edge detection
 
 
     // always
@@ -115,7 +116,10 @@ module adc(
             bit_count <=  5'd0;
             buffer    <= 32'b0;
             data      <= 32'b0;
+            ws_d      <=  1'b0;
         end else begin
+            // ws edge detection
+            ws_d <= ws;
             case(state)
                 1'b0: begin
                     // Wait for start signal
@@ -136,20 +140,24 @@ module adc(
                                 delay  <= 1'b1;
                                 buffer <= 32'b0;
                             end else begin
-                                // Collecting data
+                                // Collecting data (24 bits total into [31:8])
                                 if(bit_count < 5'd24) begin
                                     buffer[5'd31 - bit_count] <= sd;
                                     bit_count                 <= bit_count + 5'b1;
-                                end else if(bit_count == 5'd24) begin
-                                    // Data collection complete: latch data and assert valid
-                                    data     <= buffer;
-                                    flag_out <= 1'b1;
+                                end else begin
+                                    // Hold at 24 until ws rises; don't assert valid here
+                                    bit_count <= 5'd24;
                                 end
                             end
                         end else begin
                             // ws is high: reset collection state
                             bit_count <= 5'd0;
                             delay     <= 1'b0;
+                        end
+                        // At ws rising edge, if 24 bits have been collected, latch and assert valid
+                        if(ws && !ws_d && (bit_count >= 5'd24)) begin
+                            data     <= buffer;
+                            flag_out <= 1'b1;
                         end
                     end
                 end
