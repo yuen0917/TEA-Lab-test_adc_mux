@@ -12,7 +12,8 @@ module wrapper(
   output   [7:0] flag_adc_to_mux_debug,
   output [127:0] S_AXIS_tdata,
   output         S_AXIS_tvalid,
-  output         S_AXIS_tlast
+  output         S_AXIS_tlast,
+  output [255:0] data_debug
 );
 
   // wire
@@ -23,6 +24,8 @@ module wrapper(
   // assign
   assign flag_mux_to_adc_debug = flag_mux_to_adc;
   assign flag_adc_to_mux_debug = flag_adc_to_mux;
+  assign data_debug = {data[7], data[6], data[5], data[4], data[3], data[2], data[1], data[0]};
+
 
   // generate
   genvar i;

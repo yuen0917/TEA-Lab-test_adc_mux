@@ -124,6 +124,7 @@ module wrapper_tb;
   wire         S_AXIS_tlast;
   wire  [7:0]  flag_mux_to_adc;
   wire  [7:0]  flag_adc_to_mux;
+  wire [255:0] data_debug;
 
   // =======================
   // DUT
@@ -139,7 +140,8 @@ module wrapper_tb;
     .S_AXIS_tvalid(S_AXIS_tvalid),
     .S_AXIS_tlast(S_AXIS_tlast),
     .flag_mux_to_adc_debug(flag_mux_to_adc),
-    .flag_adc_to_mux_debug(flag_adc_to_mux)
+    .flag_adc_to_mux_debug(flag_adc_to_mux),
+    .data_debug(data_debug)
   );
 
   // =======================
@@ -252,10 +254,10 @@ module wrapper_tb;
          pased_data <= S_AXIS_tdata;
          $display("time = %t ws = %b sd = %02h tdata[127:0] = %032h",
                  $time, ws, sd, S_AXIS_tdata[127:0]);
-         $display("  data1 = %08h data2 = %08h data3 = %08h data4 = %08h",
-                 dut.data[0], dut.data[1], dut.data[2], dut.data[3]);
-         $display("  data5 = %08h data6 = %08h data7 = %08h data8 = %08h",
-                 dut.data[4], dut.data[5], dut.data[6], dut.data[7]);
+        $display("  data1 = %08h data2 = %08h data3 = %08h data4 = %08h",
+                data_debug[ 31:  0], data_debug[ 63: 32], data_debug[ 95: 64], data_debug[127: 96]);
+        $display("  data5 = %08h data6 = %08h data7 = %08h data8 = %08h",
+                data_debug[159:128], data_debug[191:160], data_debug[223:192], data_debug[255:224]);
          $display("  flag_mux_to_adc = %02h flag_adc_to_mux = %02h",
                  flag_mux_to_adc, flag_adc_to_mux);
          $display("  ADC inputs: sd[0] = %b sd[1] = %b sd[2] = %b sd[3] = %b sd[4] = %b sd[5] = %b sd[6] = %b sd[7] = %b",

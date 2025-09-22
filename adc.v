@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 
+// Old adc.v
 // module adc(sck,ws,sd,rst,start,data,flag_in,flag_out);
 // input rst,sck,ws,sd,start,flag_in;
 // output data,flag_out;
@@ -85,6 +86,7 @@
 
 // endmodule
 
+// New adc.v
 module adc(
     // input
     input  sck, // sck = ws*64
